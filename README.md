@@ -6,6 +6,7 @@ Demos e soluções para ambiente Web.
 <li> acionarGuilhotina</br>
 <li> ligarLedStatus</br>
 <li> desligarLedStatus</br>
+<li> ligarScanner e receber dados scanner</br>
 <b>Aplicativo disponível na Sunmi Store</b> (loja padrão do S.O. disponível em todos os equipamentos da linha de Automação Comercial), instale no equipamento que deseja utilizar configure na primeira vez o modelo do equipamento. </br>
 A sua aplicação deve abrir este app para garantir que o serviço está funcionando. 
 </p>
