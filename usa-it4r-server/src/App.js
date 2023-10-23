@@ -152,6 +152,53 @@ function App() {
       console.error(error);
     });
   }
+  async function ligarScanner() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/scanner',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'ligarScanner', PARAM: ''}
+    };
+    try{
+      const {data,status}= await axios.request(options)
+      console.log(data)
+      return data
+    }catch(ex) {
+      console.log(ex)
+      return ''
+    }
+    
+  }
+  async function recebeScanner() {
+    const options = {
+      method: 'GET',
+      url: 'http://127.0.0.1:5000/scanner',
+      headers: {'Content-Type': 'application/json'},
+      data: {}
+    };
+    try{
+      const {data,status}= await axios.request(options);
+      return data;
+  }
+  catch(ex){
+    console.error(ex);
+    return '';
+  }
+
+  }
+
+  async function lerScanner() {
+    await ligarScanner();
+    await new Promise (r=>setTimeout(r,1000));
+    for (let i=0;i<5;i++){
+      const valRet = await recebeScanner();
+      console.log(valRet);
+      await new Promise (r=>setTimeout(r,3000));
+      if (valRet!=='') i=5;
+    }
+
+  }
+
   return (
     <div className={classes.root}>
       <Grid
@@ -226,6 +273,11 @@ function App() {
         <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={desligaLed}>
               Desligar Led
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={lerScanner}>
+              Ler Scanner
             </Button>
         </Grid>
         </Grid>
