@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
 import aguia from "./assets/itfast.png";
+import { Label } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,8 @@ function App() {
   };
 
   const [message, setMessage] = useState("");
+
+  const [valCodBar, setValCodBar] = useState("");
 
   function print() {
     const options = {
@@ -138,6 +141,62 @@ function App() {
       console.error(error);
     });
   }
+  function ligaLedAmarelo() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/led',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'ligarLedStatus', PARAM: 'AMARELO'}
+    };
+    
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
+  function ligaLedBranco() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/led',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'ligarLedStatus', PARAM: 'BRANCO'}
+    };
+    
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
+  function ligaLedCiano() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/led',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'ligarLedStatus', PARAM: 'CIANO'}
+    };
+    
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
+  function ligaLedMagenta() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/led',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'ligarLedStatus', PARAM: 'MAGENTA'}
+    };
+    
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
   function desligaLed() {
     const options = {
       method: 'POST',
@@ -166,9 +225,9 @@ function App() {
     }catch(ex) {
       console.log(ex)
       return ''
-    }
-    
+    } 
   }
+
   async function recebeScanner() {
     const options = {
       method: 'GET',
@@ -184,32 +243,31 @@ function App() {
     console.error(ex);
     return '';
   }
-
   }
 
   async function lerScanner() {
     await ligarScanner();
     await new Promise (r=>setTimeout(r,1000));
-    for (let i=0;i<5;i++){
-      const valRet = await recebeScanner();
-      console.log(valRet);
+    for (let i=0;i<10;i++){
+      const valCodBar = await recebeScanner();
+      console.log(valCodBar);
+      setValCodBar(valCodBar);
+      
       await new Promise (r=>setTimeout(r,3000));
-      if (valRet!=='') i=5;
+      if (valCodBar!=='') i=10;
     }
-
   }
 
+  
+
   return (
-    <div className={classes.root}>
-      <Grid
-        container
-        style={{
+  <div className={classes.root}>
+      <Grid container style={{
           display: "flex",
           flexDirection: "column",
           margin: "auto",
           justifyContent: "center",
-        }}
-      >
+        }}>
         <Grid item>
           <img
             src={aguia}
@@ -217,19 +275,15 @@ function App() {
             style={{ width: "50%", height: "50%" }}
           />
         </Grid>
-       
-      </Grid>
-      <Grid container style={{ marginTop: 100}} spacing={1}>
-        <Grid
-          container
-          style={{
+     </Grid>
+     <Grid container style={{ marginTop: 100}} spacing={1}>
+        <Grid container style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-          }}
-        >
-          <Grid item>
+          }}>
+        <Grid item>
             <TextField
               id="txtEntrada"
               type=""
@@ -238,23 +292,22 @@ function App() {
               variant= "outlined"
               onChange={(event) => setMessage(event.target.value)}
             />
-          </Grid>
-          <Grid item style={{ marginTop: 20 }}>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={print}>
               Imprimir
             </Button>
-          </Grid>
-          <Grid item style={{ marginTop: 20 }}>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={printPwd}>
               Imprimir cupom exemplo
             </Button>
         </Grid>
-          <Grid item style={{ marginTop: 20 }}>
+        <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={gui}>
               Acionar Guilhotina
             </Button>
         </Grid>
-
         <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={ligaLedAzul}>
               Ligar Led Azul
@@ -271,6 +324,26 @@ function App() {
             </Button>
         </Grid>
         <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={ligaLedAmarelo}>
+              Ligar Led Amarelo
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={ligaLedBranco}>
+              Ligar Led Branco
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={ligaLedCiano}>
+              Ligar Led Ciano
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={ligaLedMagenta}>
+              Ligar Led Magenta
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={desligaLed}>
               Desligar Led
             </Button>
@@ -279,10 +352,11 @@ function App() {
             <Button variant="contained" color="primary" onClick={lerScanner}>
               Ler Scanner
             </Button>
+            {valCodBar}
         </Grid>
-        </Grid>
-        
-        <Grid item xs={12} style={{ marginTop: 30 }}>
+      </Grid>
+   
+      <Grid item xs={12} style={{ marginTop: 30 }}>
           <input
             accept="image/*"
             className={classes.input}
