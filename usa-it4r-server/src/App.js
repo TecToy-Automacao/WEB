@@ -64,6 +64,15 @@ function App() {
       method: 'POST',
       url: 'http://127.0.0.1:5000/printer',
       headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'imprimirBMP', PARAM: '/storage/emulated/0/tectoylogo.bmp'}
+      //informar sempre o path completo do arquivo da logo.bmp de até 200x200 px, que deve estar no dispositivo.
+    };
+    //a logo será impressa junto com o buffer de exemplo
+    axios.request(options).then(function (response) {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/printer',
+      headers: {'Content-Type': 'application/json'},
       data: {CMD: 'imprimir', PARAM: `<ce><b><da><dl><l>BEM VINDO<l><l></dl></da><inv><eg>S123<l></eg></inv></b><da>Sua posicao na fila: 10<l><l></da>Conheca nossos produtos!<l>http://tectoy.com.br/<l><l>06/10/2023<l></ce><l><l><l><l><l>`}
     };
     
@@ -83,6 +92,9 @@ function App() {
     }).catch(function (error) {
       console.error(error);
     });
+  }).catch(function (error) {
+    console.error(error);
+  });
   }
 
   function gui() {
@@ -99,6 +111,50 @@ function App() {
       console.error(error);
     });
   }
+
+  function printBMP() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/printer',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'imprimirBMP', PARAM: '/storage/emulated/0/tectoylogoTopo.bmp'}
+      //informar sempre o path completo do arquivo da logo.bmp de até 200 px de altura, que deve estar no dispositivo.
+    };
+    //Para todos menos o K2 - a logo será impressa junto com a proxima informação, caso seja apenas ela, enviar um texto com \n depois como fazemos aqui.    
+    axios.request(options).then(function (response) {
+      const options = {
+        method: 'POST',
+        url: 'http://127.0.0.1:5000/printer',
+        headers: {'Content-Type': 'application/json'},
+        data: {CMD: 'imprimir', PARAM: '\n'}
+      };
+      
+      axios.request(options).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.error(error);
+      }); 
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
+
+  function printImagem() {
+    const options = {
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/printer',
+      headers: {'Content-Type': 'application/json'},
+      data: {CMD: 'imprimirImagem', PARAM: '/storage/emulated/0/imgExemplo.jpg'}
+      //informar sempre o path completo da imagem que pode ser .bmp/.jpg/.jpeg/.png e deve estar no dispositivo.
+    };
+    
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
+
   function ligaLedVermelho() {
     const options = {
       method: 'POST',
@@ -113,6 +169,7 @@ function App() {
       console.error(error);
     });
   }
+  
   function ligaLedVerde() {
     const options = {
       method: 'POST',
@@ -301,6 +358,16 @@ function App() {
         <Grid item style={{ marginTop: 20 }}>
             <Button variant="contained" color="primary" onClick={printPwd}>
               Imprimir cupom exemplo
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={printBMP}>
+              Imprimir logo(.BMP)
+            </Button>
+        </Grid>
+        <Grid item style={{ marginTop: 20 }}>
+            <Button variant="contained" color="primary" onClick={printImagem}>
+              Imprimir Imagem
             </Button>
         </Grid>
         <Grid item style={{ marginTop: 20 }}>
