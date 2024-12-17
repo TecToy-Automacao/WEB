@@ -73,7 +73,7 @@ function App() {
       method: 'POST',
       url: 'http://127.0.0.1:5000/printer',
       headers: {'Content-Type': 'application/json'},
-      data: {CMD: 'imprimir', PARAM: `<ce><b><da><dl><l>BEM VINDO<l><l></dl></da><inv><eg>S123<l></eg></inv></b><da>Sua posicao na fila: 10<l><l></da>Conheca nossos produtos!<l>http://tectoy.com.br/<l><l>06/10/2023<l></ce><l><l><l><l><l>`}
+      data: {CMD: 'imprimir', PARAM: `tam.normal<l><da>tam.duplaAltura<l></da><dl>tam.duplaLargura<l></dl><md>tam.Médio<l></md><gr>tam.Grande<l></gr><eg>E.Gd<l></eg><l><l><l><l><l><ce><b><dl><l>BEM VINDO<l><l></dl><inv><eg>S123<l></eg></inv></b><da>Sua posicao na fila: 10<l><l></da>Conheca nossos produtos!<l>http://tectoy.com.br/<l><l><md>06/10/2023<l></md></ce><l><l><l><l><l>`}
     };
     
     axios.request(options).then(function (response) {
